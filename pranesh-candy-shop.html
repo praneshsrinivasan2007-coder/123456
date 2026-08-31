@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRANESH — Candy & Chocolate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #2A1454;
+    --bg-deep-2: #3A1B6E;
+    --pink: #FF3E7F;
+    --yellow: #FFD23F;
+    --mint: #39D98A;
+    --orange: #FF8A3D;
+    --cream: #FFF7EC;
+    --choc: #4A2418;
+    --choc-light: #6B3423;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--cream);
+    color: var(--choc);
+    overflow-x: hidden;
+  }
+
+  h1, h2, .logo {
+    font-family: 'Baloo 2', sans-serif;
+  }
+
+  a { text-decoration: none; }
+
+  button { font-family: 'Quicksand', sans-serif; border: none; cursor: pointer; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: radial-gradient(circle at 20% 20%, var(--bg-deep-2), var(--bg-deep) 70%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-decor {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0.9;
+  }
+
+  .lollipop {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: pop-in 0.7s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .lollipop .stick {
+    width: 5px;
+    height: 60px;
+    background: var(--choc-light);
+    border-radius: 3px;
+  }
+  .lollipop .head {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    margin-bottom: -6px;
+  }
+  .lollipop.p1 { top: 12%; left: 8%; animation-delay: .1s; }
+  .lollipop.p1 .head { background: conic-gradient(var(--pink), var(--yellow), var(--mint), var(--pink)); }
+  .lollipop.p2 { top: 62%; left: 4%; animation-delay: .25s; --r: -14deg; }
+  .lollipop.p2 .head { background: conic-gradient(var(--orange), var(--pink), var(--orange)); }
+  .lollipop.p3 { top: 20%; right: 7%; animation-delay: .4s; --r: 10deg; }
+  .lollipop.p3 .head { background: conic-gradient(var(--mint), var(--yellow), var(--mint)); }
+  .lollipop.p4 { top: 68%; right: 10%; animation-delay: .55s; --r: -8deg; }
+  .lollipop.p4 .head { background: conic-gradient(var(--pink), var(--mint), var(--yellow), var(--pink)); }
+
+  @keyframes pop-in {
+    0% { opacity: 0; transform: translateY(20px) scale(.6) rotate(calc(var(--r, 0deg) - 20deg)); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(var(--r, 0deg)); }
+  }
+
+  .gummy {
+    position: absolute;
+    opacity: 0;
+    animation: pop-in .7s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .gummy svg { display: block; }
+  .gummy.g1 { top: 40%; left: 15%; animation-delay: .3s; width: 46px; }
+  .gummy.g2 { top: 78%; left: 30%; animation-delay: .5s; width: 34px; }
+  .gummy.g3 { top: 32%; right: 20%; animation-delay: .35s; width: 40px; }
+
+  nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 6%;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.5px;
+  }
+
+  .nav-cta {
+    background: var(--pink);
+    color: var(--cream);
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,62,127,0.4); }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 6% 6%;
+  }
+
+  .hero-title {
+    font-size: clamp(4rem, 14vw, 9rem);
+    font-weight: 800;
+    line-height: 0.95;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    letter-spacing: 2px;
+  }
+  .hero-title span {
+    display: inline-block;
+    opacity: 0;
+    animation: letter-drop .6s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  .hero-title span:nth-child(1) { color: var(--pink); animation-delay: .05s; }
+  .hero-title span:nth-child(2) { color: var(--yellow); animation-delay: .1s; }
+  .hero-title span:nth-child(3) { color: var(--mint); animation-delay: .15s; }
+  .hero-title span:nth-child(4) { color: var(--orange); animation-delay: .2s; }
+  .hero-title span:nth-child(5) { color: var(--pink); animation-delay: .25s; }
+  .hero-title span:nth-child(6) { color: var(--mint); animation-delay: .3s; }
+  .hero-title span:nth-child(7) { color: var(--yellow); animation-delay: .35s; }
+
+  @keyframes letter-drop {
+    0% { opacity: 0; transform: translateY(-40px) rotate(-8deg); }
+    100% { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+
+  .hero-tag {
+    margin-top: 22px;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: var(--cream);
+    opacity: 0.85;
+    max-width: 480px;
+    font-weight: 500;
+  }
+
+  .hero-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 16px 34px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--choc);
+  }
+  .btn-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 24px rgba(255,210,63,0.35); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--cream);
+    border: 2px solid rgba(255,247,236,0.4);
+  }
+  .btn-secondary:hover { border-color: var(--cream); transform: translateY(-3px); }
+
+  .scroll-hint {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: rgba(255,247,236,0.6);
+    font-size: 0.85rem;
+    padding-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .tap-target {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @keyframes tap-bounce {
+    0%   { transform: scale(1) rotate(var(--r, 0deg)); }
+    35%  { transform: scale(1.2) rotate(calc(var(--r, 0deg) - 10deg)); }
+    60%  { transform: scale(0.9) rotate(calc(var(--r, 0deg) + 8deg)); }
+    85%  { transform: scale(1.06) rotate(calc(var(--r, 0deg) - 4deg)); }
+    100% { transform: scale(1) rotate(var(--r, 0deg)); }
+  }
+  .tap-bounce { animation: tap-bounce .55s ease; }
+
+  @keyframes choc-wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  .choc-img {
+    width: 74px;
+    margin-bottom: 14px;
+    animation: choc-wiggle 3.4s ease-in-out infinite;
+    transform-origin: 50% 80%;
+  }
+
+  /* ---------- LINEUP ---------- */
+  .lineup {
+    padding: 110px 6% 90px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-heading {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    max-width: 620px;
+    line-height: 1.1;
+  }
+  .section-sub {
+    margin-top: 16px;
+    max-width: 480px;
+    font-size: 1.1rem;
+    color: var(--choc-light);
+    font-weight: 500;
+  }
+
+  .lineup-grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .candy-card {
+    position: relative;
+    padding: 32px 22px;
+    color: var(--cream);
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: transform .25s ease;
+    overflow: hidden;
+  }
+  .candy-card:hover { transform: translateY(-8px) rotate(-1deg); }
+
+  .candy-card h3 { font-family: 'Baloo 2', sans-serif; font-size: 1.4rem; margin-bottom: 6px; }
+  .candy-card p { font-size: 0.95rem; opacity: 0.9; font-weight: 500; }
+
+  .card-gummy { background: var(--mint); border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%; }
+  .card-lolli { background: var(--pink); border-radius: 50%; aspect-ratio: 1; justify-content: center; text-align: center; }
+  .card-choc { background: var(--choc); border-radius: 18px; }
+  .card-sour {
+    background: var(--orange);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    justify-content: center;
+    text-align: center;
+    aspect-ratio: 1;
+  }
+
+  /* ---------- WHY ---------- */
+  .why {
+    background: var(--choc);
+    color: var(--cream);
+    padding: 100px 6%;
+  }
+  .why-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .why h2 { font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; }
+  .why-points { display: flex; flex-direction: column; gap: 32px; }
+  .why-point h4 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.25rem;
+    color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .why-point p { color: rgba(255,247,236,0.8); font-size: 1rem; font-weight: 500; }
+
+  /* ---------- CTA / FOOTER ---------- */
+  .cta-band {
+    background: linear-gradient(120deg, var(--pink), var(--orange));
+    padding: 90px 6%;
+    text-align: center;
+    color: var(--cream);
+  }
+  .cta-band h2 { font-size: clamp(2rem, 5vw, 3rem); }
+  .cta-band p { margin-top: 14px; font-size: 1.1rem; opacity: 0.9; font-weight: 500; }
+  .cta-band .btn-primary { margin-top: 32px; display: inline-block; }
+
+  footer {
+    background: var(--bg-deep);
+    color: rgba(255,247,236,0.6);
+    padding: 36px 6%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  footer .logo { font-size: 1.1rem; color: var(--cream); }
+
+  @media (max-width: 900px) {
+    .lineup-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-inner { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  @media (max-width: 560px) {
+    .lineup-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .hero-buttons { flex-direction: column; align-items: stretch; }
+    nav { padding: 22px 6%; }
+
+    /* keep decorative candy pinned to the corners, out of the text column */
+    .gummy { display: none; }
+    .lollipop .head { width: 38px; height: 38px; }
+    .lollipop .stick { height: 40px; }
+    .lollipop.p1 { top: 2%; left: 3%; }
+    .lollipop.p2 { top: auto; bottom: 2%; left: 3%; }
+    .lollipop.p3 { top: 2%; right: 3%; }
+    .lollipop.p4 { top: auto; bottom: 2%; right: 3%; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-decor">
+    <div class="lollipop p1 tap-target"><div class="head"></div><div class="stick"></div></div>
+    <div class="lollipop p2 tap-target"><div class="head"></div><div class="stick"></div></div>
+    <div class="lollipop p3 tap-target"><div class="head"></div><div class="stick"></div></div>
+    <div class="lollipop p4 tap-target"><div class="head"></div><div class="stick"></div></div>
+    <div class="gummy g1 tap-target"><svg viewBox="0 0 60 60"><path fill="#FF3E7F" d="M30 2C40 2 55 12 55 30C55 45 45 58 30 58C15 58 5 45 5 30C5 12 20 2 30 2Z"/></svg></div>
+    <div class="gummy g2 tap-target"><svg viewBox="0 0 60 60"><path fill="#FFD23F" d="M30 2C40 2 55 12 55 30C55 45 45 58 30 58C15 58 5 45 5 30C5 12 20 2 30 2Z"/></svg></div>
+    <div class="gummy g3 tap-target"><svg viewBox="0 0 60 60"><path fill="#39D98A" d="M30 2C40 2 55 12 55 30C55 45 45 58 30 58C15 58 5 45 5 30C5 12 20 2 30 2Z"/></svg></div>
+  </div>
+
+  <nav>
+    <span class="logo">PRANESH</span>
+    <a href="#order" class="nav-cta">Order now</a>
+  </nav>
+
+  <div class="hero-content">
+    <h1 class="hero-title">
+      <span>P</span><span>R</span><span>A</span><span>N</span><span>E</span><span>S</span><span>H</span>
+    </h1>
+    <p class="hero-tag">Gummies, lollipops and chocolate made for the moment you can't wait for dessert.</p>
+    <div class="hero-buttons">
+      <a href="#order" class="btn-primary">Get a taste</a>
+      <a href="#lineup" class="btn-secondary">See the lineup</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">scroll for the good stuff ↓</div>
+</section>
+
+<section class="lineup" id="lineup">
+  <h2 class="section-heading">Four ways to ruin your appetite</h2>
+  <p class="section-sub">Every batch is made small, sold fast, and built to be shared — or not.</p>
+
+  <div class="lineup-grid">
+    <div class="candy-card card-gummy tap-target">
+      <h3>Gummies</h3>
+      <p>Chewy, fruity, gone in seconds.</p>
+    </div>
+    <div class="candy-card card-lolli tap-target">
+      <h3>Lollipops</h3>
+      <p>Hand-swirled, slow to finish.</p>
+    </div>
+    <div class="candy-card card-choc tap-target">
+      <svg class="choc-img" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="96" height="66" rx="10" fill="#6B3423"/>
+        <rect x="2" y="2" width="96" height="66" rx="10" fill="none" stroke="#4A2418" stroke-width="2"/>
+        <g stroke="#4A2418" stroke-width="2">
+          <line x1="26" y1="2" x2="26" y2="68"/>
+          <line x1="50" y1="2" x2="50" y2="68"/>
+          <line x1="74" y1="2" x2="74" y2="68"/>
+          <line x1="2" y1="35" x2="98" y2="35"/>
+        </g>
+        <path d="M8 10 Q 20 4 34 10" stroke="#8A5A45" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <h3>Chocolates</h3>
+      <p>Rich, dark, no apologies.</p>
+    </div>
+    <div class="candy-card card-sour tap-target">
+      <h3>Sour Drops</h3>
+      <p>Face-scrunching, in a good way.</p>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="why-inner">
+    <h2>Made small, sold fresh, built to be your favorite thing this week.</h2>
+    <div class="why-points">
+      <div class="why-point">
+        <h4>Small batches</h4>
+        <p>We make candy in short runs so nothing sits on a shelf too long.</p>
+      </div>
+      <div class="why-point">
+        <h4>Real ingredients</h4>
+        <p>Fruit purées, real cocoa, no shortcuts on flavor.</p>
+      </div>
+      <div class="why-point">
+        <h4>Made for sharing (optional)</h4>
+        <p>Comes in packs built for two — or just you, no judgment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="order">
+  <h2>Ready when you are.</h2>
+  <p>Message us to place an order or ask what's fresh this week.</p>
+  <a href="#" class="btn-primary">Order on WhatsApp</a>
+</section>
+
+<footer>
+  <span class="logo">PRANESH</span>
+  <span>Made with cocoa and sugar, somewhere in Tamil Nadu.</span>
+</footer>
+
+<script>
+  document.querySelectorAll('.tap-target').forEach(function (el) {
+    el.addEventListener('click', function () {
+      el.classList.remove('tap-bounce');
+      void el.offsetWidth; // restart the animation even on repeated taps
+      el.classList.add('tap-bounce');
+    });
+    el.addEventListener('animationend', function (e) {
+      if (e.animationName === 'tap-bounce') el.classList.remove('tap-bounce');
+    });
+  });
+</script>
+</body>
+</html>
